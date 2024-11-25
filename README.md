@@ -16,8 +16,10 @@
 https://miktex.org/ (или любой другой)
 
 Библиотеки:<br>
+```
 $ npm install telegraf<br>
 $ npm install openai
+```
 
 ## Запуск
 
