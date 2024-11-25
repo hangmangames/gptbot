@@ -6,9 +6,9 @@
 
 Перед запуском убедитесь, что установлен: https://nodejs.org/en
 Изменить данные в config:
-bot.token на свой токен чат бота.
-gpt.token на свой токен.
-group.id на индификатор своей группы (беседы)
+>bot.token на свой токен чат бота.
+>gpt.token на свой токен.
+>group.id на индификатор своей группы (беседы)
  остальное не трогать!!!
 
 ## Установка
@@ -16,8 +16,8 @@ group.id на индификатор своей группы (беседы)
 https://miktex.org/ (или любой другой)
 
 Библиотеки:
-$$ npm install telegraf
-$$ npm install openai
+$ npm install telegraf<br>
+$ npm install openai
 
 ## Запуск
 
