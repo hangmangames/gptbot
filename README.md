@@ -7,16 +7,16 @@
 Перед запуском убедитесь, что установлен: https://nodejs.org/en
 Изменить данные в config:
 ```
->bot.token на свой токен чат бота.<br>
+bot.token на свой токен чат бота.
 ```
 ```
->gpt.token на свой токен.<br>
+gpt.token на свой токен.
 ```
 ```
->group.id на индификатор своей группы (беседы)<br>
+group.id на индификатор своей группы (беседы)
 ```
   > [!NOTE]
-  > остальное не трогать!!!<br>
+  > остальное не трогать!!!
 
 ## Установка
 
@@ -24,7 +24,7 @@ https://miktex.org/ (или любой другой)
 
 Библиотеки:<br>
 ```
-$ npm install telegraf<br>
+$ npm install telegraf
 ```
 ```
 $ npm install openai
@@ -42,6 +42,6 @@ node bot.js (либо воспользоваться run.bat)
 
 ```
 cd [путь к папке где находится бот] 
-node bot.js <br>
+node bot.js 
 либо же через: pm2 start bot.js 
 ```
