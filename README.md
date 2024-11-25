@@ -29,5 +29,5 @@ node bot.js (либо воспользоваться run.bat)
 На хостинге:
 
 cd [путь к папке где находится бот] 
-node bot.js
+node bot.js <br>
 либо же через: pm2 start bot.js 
