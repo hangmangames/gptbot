@@ -44,5 +44,6 @@ npm install openai
 
 > [!NOTE]
 >cd [путь к папке где находится бот] 
-node bot.js 
+node bot.js
+> [!NOTE]
 >либо же через: pm2 start bot.js 
