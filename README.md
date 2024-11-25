@@ -16,8 +16,8 @@ group.id на индификатор своей группы (беседы)
 https://miktex.org/ (или любой другой)
 
 Библиотеки:
-$ npm install telegraf
-$ npm install openai
+$npm install telegraf
+$npm install openai
 
 ## Запуск
 
