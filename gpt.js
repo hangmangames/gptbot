@@ -1,35 +1,33 @@
-const axios = require('axios');
+const { OpenAIApi } = require('openai');
 const fs = require('fs');
 const config = require('./config');
+
+const openai = new OpenAIApi({
+    apiKey: config.gpt.token,
+});
 
 const generateDrawing = async (task, history = [], maxTokens = null) => {
     const prompt = `${task} Нарисуйте рисунок для этой задачи, используя LaTeX с пакетом TikZ. Не решайте проблему, просто нарисуйте рисунок. Не пишите комментарии, просто напишите код в формате latex. Не пиши комментарии не должны быть не какие ковычки в начале и в конце`;
 
     const requestBody = {
-        message: prompt,
-        api_key: config.gpt.token,
-        history: history,
-        max_tokens: maxTokens
+        model: "gpt-4-omni",
+        messages: [{ role: "user", content: prompt }]
     };
 
     try {
-        const response = await axios.post('https://ask.chadgpt.ru/api/public/gpt-4o-mini', requestBody, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
+        const response = await openai.chat.completions.create(requestBody);
 
-        if (response.data && response.data.is_success) {
-            const latexCode = response.data.response;
+        if (response && response.data.choices && response.data.choices.length > 0) {
+            const latexCode = response.data.choices[0].message.content;
 
             fs.writeFileSync('./filePlan/plan.tex', latexCode);
             return latexCode;
         } else {
-            console.error('Unexpected response format:', response.data);
+            console.error('Unexpected response format:', response);
             throw new Error('No valid response found in response');
         }
     } catch (error) {
-        console.error('Error fetching response from Chad AI:', error);
+        console.error('Error fetching response from OpenAI:', error);
         throw error;
     }
 };
