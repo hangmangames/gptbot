@@ -15,7 +15,7 @@ const generateDrawing = async (task, history = [], maxTokens = null) => {
     };
 
     try {
-        const response = await openai.chat.completions.create(requestBody);
+        const response = await openai.createChatCompletion(requestBody);
 
         if (response && response.data.choices && response.data.choices.length > 0) {
             const latexCode = response.data.choices[0].message.content;
