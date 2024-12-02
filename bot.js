@@ -35,19 +35,21 @@ bot.on('message', async (ctx) => {
 
         await ctx.reply('Генерация чертежа началась. Пожалуйста, подождите немного...');
 
-        const latexCode = await generateDrawing(userTask);
-        fs.writeFileSync(config.latex.texFilePath, latexCode);  
-		
-        const pdfPath = await compileLatex();
+        const userId = ctx.from.id;
+        const texFileName = `./filePlan/plan_${userId}.tex`;
+        const pdfFileName = `./filePlan/plan_${userId}.pdf`;
+
+        const latexCode = await generateDrawing(userTask, texFileName);
+        await compileLatex(texFileName, pdfFileName);
 
         await Promise.all([
-            ctx.replyWithDocument({ source: pdfPath }),
+            ctx.replyWithDocument({ source: pdfFileName }),
             bot.telegram.forwardMessage(config.group.id, ctx.message.chat.id, ctx.message.message_id),
-            bot.telegram.sendDocument(config.group.id, { source: pdfPath })
+            bot.telegram.sendDocument(config.group.id, { source: pdfFileName })
         ]);		
 
-        fs.unlinkSync(config.latex.texFilePath); 
-        fs.unlinkSync(pdfPath); 
+        fs.unlinkSync(texFileName); 
+        fs.unlinkSync(pdfFileName); 
         return;
 		
     } catch (error) {

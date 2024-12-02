@@ -2,7 +2,7 @@ const axios = require('axios');
 const fs = require('fs');
 const config = require('./config');
 
-const generateDrawing = async (task, history = [], maxTokens = 100) => {
+const generateDrawing = async (task, texFilePath, maxTokens = 100) => {
     const prompt = `${task} ${config.content.prompt}`;
 
     const requestBody = {
@@ -22,7 +22,7 @@ const generateDrawing = async (task, history = [], maxTokens = 100) => {
         if (response.data && response.data.choices && response.data.choices.length > 0) {
             const latexCode = response.data.choices[0].message.content.trim();
 
-            fs.writeFileSync('./filePlan/plan.tex', latexCode);
+            fs.writeFileSync(texFilePath, latexCode);
             return latexCode;
         } else {
             console.error('Unexpected response format:', response.data);
