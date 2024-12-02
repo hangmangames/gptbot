@@ -3,10 +3,10 @@ const fs = require('fs');
 const config = require('./config');
 
 const generateDrawing = async (task, history = [], maxTokens = 100) => {
-    const prompt = `${task} Нарисуйте рисунок для этой задачи, используя LaTeX с пакетом TikZ. Не решайте проблему, просто нарисуйте рисунок. Не пишите комментарии, просто напишите код в формате latex. Не пиши комментарии не должны быть не какие ковычки в начале и в конце;`;
+    const prompt = `${task} ${config.content.prompt}`;
 
     const requestBody = {
-        model: "gpt-3.5-turbo",
+        model: config.model.gpt,
         messages: [{ role: "user", content: prompt }],
         max_tokens: maxTokens
     };

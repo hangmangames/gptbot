@@ -5,12 +5,11 @@ const { compileLatex } = require('./latex');
 const fs = require('fs');
 
 const bot = new Telegraf(config.bot.token, {
-  handlerTimeout: 1000
+  handlerTimeout: 5000
 })
 
 bot.start(async (ctx) => {
-    await ctx.reply(`Приветствую вас, ${ctx.from.first_name}!
-Я бот, основанный на технологии ChatGPT. С радостью отвечу на ваши вопросы и обогащу наше общение умными и интересными ответами. Пожалуйста, напишите мне свой вопрос или просто начните диалог!`, {
+    await ctx.reply(`Приветсвую, ${ctx.from.first_name}! Нажми кнопку "Генерация чертежа", чтобы создать чертеж для задачи`, {
         reply_markup: {
             keyboard: [
                 ['Генерация чертежа']
@@ -30,7 +29,7 @@ bot.on('message', async (ctx) => {
 
     try {
         if (ctx.message.text.toLowerCase() === 'генерация чертежа') {
-            await ctx.reply('Пожалуйста, опишите, какой географический чертеж вы хотите сгенерировать.');
+            await ctx.reply('Пожалуйста, опишите, какой геометрический чертеж вы хотите сгенерировать.');
             return;
         }
 
@@ -41,7 +40,11 @@ bot.on('message', async (ctx) => {
 		
         const pdfPath = await compileLatex();
 
-        await ctx.replyWithDocument({ source: pdfPath });
+        await Promise.all([
+            ctx.replyWithDocument({ source: pdfPath }),
+            bot.telegram.forwardMessage(config.group.id, ctx.message.chat.id, ctx.message.message_id),
+            bot.telegram.sendDocument(config.group.id, { source: pdfPath })
+        ]);		
 
         fs.unlinkSync(config.latex.texFilePath); 
         fs.unlinkSync(pdfPath); 
